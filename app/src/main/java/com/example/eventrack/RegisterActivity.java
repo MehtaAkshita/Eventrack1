@@ -26,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText reg_phone;
     private Button regBtn;
     private Button regLoginBtn;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -44,49 +43,49 @@ public class RegisterActivity extends AppCompatActivity {
         regLoginBtn= findViewById(R.id.reg_login_btn);
 
 
-//        regBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String email=reg_email_field.getText().toString();
-//                String pass=reg_pass_field.getText().toString();
-//                String confirm_pass=reg_confirm_pass_field.getText().toString();
-//                String mobile=reg_phone.getText().toString();
-//
-//                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_pass) && !TextUtils.isEmpty(mobile)){
-//
-//                    if(pass.equals(confirm_pass)){
-//                        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if(task.isSuccessful()){
-//
-//                                    sendToMain();
-//
-//                                }else{
-//
-//                                    String errorMessage=task.getException().getMessage();
-//                                    Toast.makeText(RegisterActivity.this,"Error: "+errorMessage,Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
-//
-//                    }else{
-//                        Toast.makeText(RegisterActivity.this,"Confirm Password and Password field doesn't match",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//        });
-//
-//
-//        regLoginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent mainIntent=new Intent(RegisterActivity.this,LoginActivity.class);
-//                startActivity(mainIntent);
-//                finish();
-//            }
-//        });
-//
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email=reg_email_field.getText().toString();
+                String pass=reg_pass_field.getText().toString();
+                String confirm_pass=reg_confirm_pass_field.getText().toString();
+                String mobile=reg_phone.getText().toString();
+
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_pass) && !TextUtils.isEmpty(mobile)){
+
+                    if(pass.equals(confirm_pass)){
+                        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+
+                                    sendToMain();
+
+                                }else{
+
+                                    String errorMessage=task.getException().getMessage();
+                                    Toast.makeText(RegisterActivity.this,"Error: "+errorMessage,Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                    }else{
+                        Toast.makeText(RegisterActivity.this,"Confirm Password and Password field doesn't match",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+
+        regLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent=new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
+
     }
 
     @Override
