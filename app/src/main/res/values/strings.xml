@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Eventrack</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="todo">TODO</string>
+    <string name="action_search_text">Search</string>
+    <string name="action_setting_text">Account Settings</string>
+    <string name="action_logout_text">Logout</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="register_logo">Register logo</string>
+    <string name="login_logo">Login logo</string>
+    <string name="reg_btn_text">Create a new account</string>
+    <string name="reg_login_text">Already Registered</string>
+    <string name="josh_logo">josh_logo</string>
+</resources>
