@@ -1,139 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
-
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <ImageView
         android:id="@+id/reg_logo"
-        android:layout_width="170dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginBottom="15dp"
+        android:layout_width="170sp"
+        android:layout_gravity="center"
+        android:layout_height="80sp"
+        android:layout_marginTop="63sp"
+        android:layout_marginBottom="15sp"
         android:contentDescription="@string/register_logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/register" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="139dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="139sp"
+        android:layout_height="36sp"
+        android:layout_marginBottom="59sp"
         android:text="@string/register"
         android:textAllCaps="true"
+        android:layout_gravity="center"
         android:textColor="#FF9800"
         android:textColorHighlight="#FF5722"
         android:textDirection="locale"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/reg_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reg_logo" />
 
     <EditText
         android:id="@+id/reg_email"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
+        android:layout_width="250sp"
+        android:layout_height="36sp"
+        android:layout_gravity="center"
+        android:layout_marginStart="25sp"
+        android:layout_marginEnd="25sp"
         android:ems="10"
         android:hint="@string/email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/reg_pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/reg_pass"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="9dp"
+        android:layout_width="250sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="25sp"
+        android:layout_marginEnd="25sp"
+        android:layout_marginBottom="9sp"
         android:ems="10"
         android:hint="@string/password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/reg_confim_pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_email"
+        android:layout_gravity="center"
+
+
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/reg_confim_pass"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="11dp"
+        android:layout_width="250sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="25sp"
+        android:layout_marginEnd="25sp"
+        android:layout_marginBottom="11sp"
         android:ems="10"
         android:hint="@string/confirm_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/reg_phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_pass"
+        android:layout_gravity="center"
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/reg_phone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="250sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="25sp"
+        android:layout_marginEnd="25sp"
+        android:layout_marginBottom="30sp"
         android:ems="10"
         android:hint="@string/mobile_number"
         android:importantForAutofill="no"
         android:inputType="phone"
-        app:layout_constraintBottom_toTopOf="@+id/reg_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_confim_pass"
+        android:layout_gravity="center"
         tools:targetApi="o" />
 
     <Button
         android:id="@+id/reg_btn"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="147dp"
-        android:text="@string/reg_btn_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_phone" />
+        android:layout_width="250sp"
+        android:layout_height="55sp"
+        android:layout_marginBottom="14sp"
+        android:layout_gravity="center"
+        android:text="@string/reg_btn_text" />
 
-    <Button
-        android:id="@+id/reg_login_btn"
-        android:layout_width="210dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="60dp"
-        android:text="@string/reg_login_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_btn" />
+        <Button
+            android:id="@+id/reg_login_btn"
+            android:layout_width="210sp"
+            android:layout_height="55sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="32sp"
+            android:layout_marginBottom="60sp"
+            android:background="@android:color/transparent"
+            android:text="@string/reg_login_text" />
 
-</android.support.constraint.ConstraintLayout>
+
+    </LinearLayout></ScrollView>
+
+</LinearLayout>

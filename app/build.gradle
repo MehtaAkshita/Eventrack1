@@ -29,4 +29,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
+buildscript {
+    dependencies {
+        classpath 'com.android.tools.build:gradle'
+        classpath 'com.android.tools.build:gradle:3.4.1'
+    }
+}
+
 apply plugin: 'com.google.gms.google-services'
