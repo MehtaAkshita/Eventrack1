@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,8 +36,10 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SetupActivity extends AppCompatActivity {
 
@@ -48,10 +51,12 @@ public class SetupActivity extends AppCompatActivity {
 
     private EditText setupName;
     private Button setupBtn;
+    private ProgressBar setupProgress;
 
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,6 @@ public class SetupActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Account Setup");
 
         firebaseAuth=FirebaseAuth.getInstance();
-
         user_id=firebaseAuth.getCurrentUser().getUid();
 
         firebaseFirestore=FirebaseFirestore.getInstance();
@@ -72,7 +76,9 @@ public class SetupActivity extends AppCompatActivity {
         setupImage=findViewById(R.id.setup_image);
         setupName=findViewById(R.id.setup_name);
         setupBtn=findViewById(R.id.setup_btn);
+        setupProgress = findViewById(R.id.setup_progress);
 
+        setupProgress.setVisibility(View.VISIBLE);
         setupBtn.setEnabled(false);
 
         firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -85,11 +91,10 @@ public class SetupActivity extends AppCompatActivity {
                         String image=task.getResult().getString("image");
 
                         mainImageURI=Uri.parse(image);
-
                         setupName.setText(name);
 
-                        RequestOptions placeholderRequest=new RequestOptions();
-                        placeholderRequest.placeholder(R.drawable.default_profile);
+                        RequestOptions placeholderRequest = new RequestOptions();
+                        placeholderRequest.placeholder(R.drawable.default_image);
                         Glide.with(SetupActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(setupImage);
 
                     }
@@ -101,16 +106,81 @@ public class SetupActivity extends AppCompatActivity {
                     String error = task.getException().getMessage();
                     Toast.makeText(SetupActivity.this, "(FIRESTORE Retrieve Error): " + error, Toast.LENGTH_LONG).show();
                 }
+                setupProgress.setVisibility(View.INVISIBLE);
                 setupBtn.setEnabled(true);
             }
         });
+
+//        setupBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                final String user_name = setupName.getText().toString();
+//
+//                if (!TextUtils.isEmpty(user_name) && mainImageURI != null) {
+//
+//                    setupProgress.setVisibility(View.VISIBLE);
+//
+//                    if (isChanged) {
+//
+//                        user_id = firebaseAuth.getCurrentUser().getUid();
+//
+//                        File newImageFile = new File(mainImageURI.getPath());
+//                        try {
+//
+//                            compressedImageFile = new Compressor(SetupActivity.this)
+//                                    .setMaxHeight(125)
+//                                    .setMaxWidth(125)
+//                                    .setQuality(50)
+//                                    .compressToBitmap(newImageFile);
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                        compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                        byte[] thumbData = baos.toByteArray();
+//
+//                        UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
+//
+//                        image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//
+//                                if (task.isSuccessful()) {
+//                                    storeFirestore(task, user_name);
+//
+//                                } else {
+//
+//                                    String error = task.getException().getMessage();
+//                                    Toast.makeText(SetupActivity.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
+//
+//                                    setupProgress.setVisibility(View.INVISIBLE);
+//
+//                                }
+//                            }
+//                        });
+//
+//                    } else {
+//
+//                        storeFirestore(null, user_name);
+//
+//                    }
+//
+//                }
+//
+//            }
+//
+//        });
+
 
         setupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String user_name=setupName.getText().toString();
                 if(!TextUtils.isEmpty(user_name) && mainImageURI!=null){
-
+                    setupProgress.setVisibility(View.VISIBLE);
                     if (isChanged) {
 
                         user_id=firebaseAuth.getCurrentUser().getUid();
@@ -126,6 +196,7 @@ public class SetupActivity extends AppCompatActivity {
                                 }else{
                                     String error=task.getException().getMessage();
                                     Toast.makeText(SetupActivity.this,"(IMAGE Error): "+ error,Toast.LENGTH_LONG).show();
+                                    setupProgress.setVisibility(View.INVISIBLE);
 
                                 }
                             }
@@ -226,13 +297,16 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
-    private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task,String user_name) {
+    private void storeFirestore(Task<UploadTask.TaskSnapshot> task,String user_name) {
 
         if(task!=null){
-            UploadTask.TaskSnapshot download_uri=task.getResult();
+//            Task<Uri> download_uri = task.getResult().getMetadata().getReference().getDownloadUrl();
+//            Task<Uri> urlTask = task.getResult().getMetadata().getReference().getDownloadUrl();
+//            Uri download_uri = urlTask.getResult();
+            String download_uri=task.getResult().getStorage().getDownloadUrl().toString();
             Map<String,String> userMap=new HashMap<>();
             userMap.put("name",user_name);
-            userMap.put("image",download_uri.toString());
+            userMap.put("image",download_uri);
             firebaseFirestore.collection("Users").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -245,6 +319,7 @@ public class SetupActivity extends AppCompatActivity {
                         String error = task.getException().getMessage();
                         Toast.makeText(SetupActivity.this, "(FIRESTORE Error): " + error, Toast.LENGTH_LONG).show();
                     }
+                    setupProgress.setVisibility(View.INVISIBLE);
                 }
             });
         }else{
@@ -264,6 +339,7 @@ public class SetupActivity extends AppCompatActivity {
                         String error = task.getException().getMessage();
                         Toast.makeText(SetupActivity.this, "(FIRESTORE Error): " + error, Toast.LENGTH_LONG).show();
                     }
+                    setupProgress.setVisibility(View.INVISIBLE);
                 }
 
             });

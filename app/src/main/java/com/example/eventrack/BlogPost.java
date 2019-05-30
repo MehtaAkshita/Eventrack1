@@ -5,9 +5,7 @@ public class BlogPost {
 
     public String user_id, image_url, desc, image_thumb;
 
-    public BlogPost(){
-
-    }
+    public BlogPost(){ }
 
     public BlogPost(String user_id, String image_url, String desc, String image_thumb) {
         this.user_id = user_id;
