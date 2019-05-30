@@ -24,8 +24,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText reg_pass_field;
     private EditText reg_confirm_pass_field;
     private EditText reg_phone;
-    private Button regBtn;
-    private Button regLoginBtn;
+    private Button reg_btn;
+    private Button reg_login_btn;
 
     private FirebaseAuth mAuth;
 
@@ -40,42 +40,50 @@ public class RegisterActivity extends AppCompatActivity {
         reg_pass_field=findViewById(R.id.reg_pass);
         reg_confirm_pass_field= findViewById(R.id.reg_confim_pass);
         reg_phone= findViewById(R.id.reg_phone);
-        regBtn= findViewById(R.id.reg_btn);
-        regLoginBtn= findViewById(R.id.reg_login_btn);
+        reg_btn= findViewById(R.id.reg_btn);
+        reg_login_btn= findViewById(R.id.reg_login_btn);
 
-
-//        regBtn.setOnClickListener(new View.OnClickListener() {
+//        reg_login_btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                String email=reg_email_field.getText().toString();
-//                String pass=reg_pass_field.getText().toString();
-//                String confirm_pass=reg_confirm_pass_field.getText().toString();
-//                String mobile=reg_phone.getText().toString();
-//
-//                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_pass) && !TextUtils.isEmpty(mobile)){
-//
-//                    if(pass.equals(confirm_pass)){
-//                        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if(task.isSuccessful()){
-//
-//                                    sendToMain();
-//
-//                                }else{
-//
-//                                    String errorMessage=task.getException().getMessage();
-//                                    Toast.makeText(RegisterActivity.this,"Error: "+errorMessage,Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
-//
-//                    }else{
-//                        Toast.makeText(RegisterActivity.this,"Confirm Password and Password field doesn't match",Toast.LENGTH_LONG).show();
-//                    }
-//                }
+//                finish();
 //            }
 //        });
+
+        reg_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email=reg_email_field.getText().toString();
+                String pass=reg_pass_field.getText().toString();
+                String confirm_pass=reg_confirm_pass_field.getText().toString();
+                String mobile=reg_phone.getText().toString();
+
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_pass) && !TextUtils.isEmpty(mobile)){
+
+                    if(pass.equals(confirm_pass)){
+                        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+//
+                                    Intent setupIntent=new Intent(RegisterActivity.this,SetupActivity.class);
+                                    startActivity(setupIntent);
+                                    finish();
+
+                                }else{
+
+                                    String errorMessage=task.getException().getMessage();
+                                    Toast.makeText(RegisterActivity.this,"Error: "+errorMessage,Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                    }else{
+                        Toast.makeText(RegisterActivity.this,"Confirm Password and Password field doesn't match",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 //
 //
 //        regLoginBtn.setOnClickListener(new View.OnClickListener() {

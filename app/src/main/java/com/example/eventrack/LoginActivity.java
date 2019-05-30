@@ -37,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
 
-        loginEmailText=findViewById(R.id.login_email);
-        loginPassText=findViewById(R.id.login_pass);
+        loginEmailText=findViewById(R.id.reg_email);
+        loginPassText=findViewById(R.id.reg_pass);
         loginBtn=findViewById(R.id.login_btn);
         loginRegisterBtn=findViewById(R.id.login_reg_btn);
 //        loginProgress=(ProgressBar) findViewById(R.id.login_progress);
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         loginRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent regIntent=new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent regIntent=new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(regIntent);
             }
         });
