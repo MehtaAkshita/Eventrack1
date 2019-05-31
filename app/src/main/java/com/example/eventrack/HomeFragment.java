@@ -2,14 +2,18 @@ package com.example.eventrack;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -31,7 +35,11 @@ public class HomeFragment extends Fragment {
     private List<BlogPost> blog_list;
 
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
     private BlogRecyclerAdapter blogRecyclerAdapter;
+
+    private DocumentSnapshot lastVisible;
+    private Boolean isFirstPageFirstLoad = true;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,38 +47,107 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        blog_list=new ArrayList<>();
-        blog_list_view=view.findViewById(R.id.blog_list_view);
+        blog_list = new ArrayList<>();
+        blog_list_view = view.findViewById(R.id.blog_list_view);
 
-        blogRecyclerAdapter=new BlogRecyclerAdapter(blog_list);
+        blogRecyclerAdapter = new BlogRecyclerAdapter(blog_list);
         blog_list_view.setAdapter(blogRecyclerAdapter);
         blog_list_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        blog_list_view.setHasFixedSize(true);
 
-        firebaseFirestore=FirebaseFirestore.getInstance();
-        Query firstQuery =firebaseFirestore.collection("Posts");
-        firstQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot queryDocumentSnapshots,FirebaseFirestoreException e) {
+        firebaseAuth = FirebaseAuth.getInstance();
 
-                for(DocumentChange doc: queryDocumentSnapshots.getDocumentChanges()) {
-                    if(doc.getType()== DocumentChange.Type.ADDED){
+        if (firebaseAuth.getCurrentUser() != null) {
+            firebaseFirestore = FirebaseFirestore.getInstance();
 
-                        BlogPost blogPost=doc.getDocument().toObject(BlogPost.class);
-                        blog_list.add(blogPost);
+            blog_list_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
 
-                        blogRecyclerAdapter.notifyDataSetChanged();
+                    boolean reachedBottom = !recyclerView.canScrollVertically(1);
+                    if (reachedBottom) {
+//                        String desc=lastVisible.getString("desc");
+//                        Toast.makeText(container.getContext(),"Reached: "+desc,Toast.LENGTH_SHORT).show();
+                        loadMorePost();
                     }
+
                 }
-            }
-        });
+            });
+
+            Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp", Query.Direction.DESCENDING).limit(3);
+            firstQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                    if(!queryDocumentSnapshots.isEmpty()){
+                        if(isFirstPageFirstLoad){
+                            lastVisible=queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                            blog_list.clear();
+                        }
+                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                String blogPostId=doc.getDocument().getId();
+                                BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+
+                                if(isFirstPageFirstLoad){
+                                    blog_list.add(blogPost);
+                                }else{
+                                    blog_list.add(0,blogPost);
+                                }
+
+
+                                blogRecyclerAdapter.notifyDataSetChanged();
+                            }
+                        }
+                        isFirstPageFirstLoad=false;
+                    }
+
+                }
+            });
+
+        }
 
         // Inflate the layout for this fragment
         return view;
     }
 
+    public void loadMorePost() {
+        if(firebaseAuth.getCurrentUser() != null) {
+            Query nextQuery;
+            nextQuery = firebaseFirestore.collection("Posts")
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .startAfter(lastVisible)
+                    .limit(3);
+
+            nextQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+
+                        lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                String blogPostId=doc.getDocument().getId();
+                                BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+                                blog_list.add(blogPost);
+
+                                blogRecyclerAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 }
+

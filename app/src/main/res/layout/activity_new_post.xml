@@ -78,7 +78,7 @@
 
     <EditText
         android:id="@+id/new_post_venue"
-        android:layout_width="360dp"
+        android:layout_width="362dp"
         android:layout_height="56dp"
         android:layout_marginBottom="19dp"
         android:ems="10"
@@ -86,7 +86,7 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/new_post_time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_post_desc" />
 
@@ -100,7 +100,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_post_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/new_post_time"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.572"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -113,7 +113,7 @@
         android:inputType="time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_post_venue" />
 

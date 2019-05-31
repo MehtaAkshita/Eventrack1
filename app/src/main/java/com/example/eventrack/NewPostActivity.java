@@ -48,9 +48,9 @@ public class NewPostActivity extends AppCompatActivity {
 
     private ImageView newPostImage;
     private EditText newPostDesc;
-//    private EditText newPostVenue;
-//    private EditText newPostDate;
-//    private EditText newPostTime;
+    private EditText newPostVenue;
+    private EditText newPostDate;
+    private EditText newPostTime;
     private Button newPostBtn;
 
     private Uri postImageUri=null;
@@ -83,9 +83,9 @@ public class NewPostActivity extends AppCompatActivity {
 
         newPostImage=findViewById(R.id.new_post_image);
         newPostDesc=findViewById(R.id.new_post_desc);
-//        newPostVenue=findViewById(R.id.new_post_venue);
-//        newPostDate=findViewById(R.id.new_post_date);
-//        newPostTime=findViewById(R.id.new_post_time);
+        newPostVenue=findViewById(R.id.new_post_venue);
+        newPostDate=findViewById(R.id.new_post_date);
+        newPostTime=findViewById(R.id.new_post_time);
         newPostBtn=findViewById(R.id.post_btn);
         newPostProgress=findViewById(R.id.new_post_progress);
 
@@ -105,11 +105,11 @@ public class NewPostActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final String desc=newPostDesc.getText().toString();
-//                final String venue=newPostVenue.getText().toString();
-//                final String date=newPostDate.getText().toString();
-//                final String time=newPostTime.getText().toString();
-//                && !TextUtils.isEmpty(venue) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time)
-                if(!TextUtils.isEmpty(desc) && postImageUri!=null){
+                final String venue=newPostVenue.getText().toString();
+                final String date=newPostDate.getText().toString();
+                final String time=newPostTime.getText().toString();
+
+                if(!TextUtils.isEmpty(desc) && !TextUtils.isEmpty(venue) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && postImageUri!=null){
                     newPostProgress.setVisibility(View.VISIBLE);
 
                     final String randomName= UUID.randomUUID().toString();
@@ -144,13 +144,19 @@ public class NewPostActivity extends AppCompatActivity {
                                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Task<Uri> urlTask = task.getResult().getStorage().getDownloadUrl();
+                                        while (!urlTask.isSuccessful());
+                                        final  String downloadthumbUri =urlTask.getResult().toString();
 
-                                        String downloadthumbUri=taskSnapshot.getUploadSessionUri().toString();
+//                                        String downloadthumbUri=taskSnapshot.getUploadSessionUri().toString();
 
                                         Map<String,Object> postMap=new HashMap<>();
                                         postMap.put("image_url",downloadUri);
                                         postMap.put("image_thumb",downloadthumbUri);
                                         postMap.put("desc",desc);
+                                        postMap.put("venue",venue);
+                                        postMap.put("date",date);
+                                        postMap.put("time",time);
                                         postMap.put("user_id",current_user_id);
                                         postMap.put("timestamp",FieldValue.serverTimestamp());
 

@@ -45,55 +45,58 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth=FirebaseAuth.getInstance();
-        firebaseFirestore=FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        mainToolbar=findViewById(R.id.main_toolbar);
+        mainToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Eventrack");
 
-        mainbottomNav=findViewById(R.id.mainBottomNav);
+        if (mAuth.getCurrentUser()!=null) {
 
-        //FRAGMENTS
-        homeFragment=new HomeFragment();
-        notificationFragment=new NotificationFragment();
-        accountFragment=new AccountFragment();
+            mainbottomNav = findViewById(R.id.mainBottomNav);
 
-        replaceFragment(homeFragment);
+            //FRAGMENTS
+            homeFragment = new HomeFragment();
+            notificationFragment = new NotificationFragment();
+            accountFragment = new AccountFragment();
 
-        mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            replaceFragment(homeFragment);
 
-                switch (menuItem.getItemId()){
+            mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                    case R.id.bottom_action_home:
-                        replaceFragment(homeFragment);
-                        return true;
+                    switch (menuItem.getItemId()) {
 
-                    case R.id.bottom_action_account:
-                        replaceFragment(accountFragment);
-                        return true;
+                        case R.id.bottom_action_home:
+                            replaceFragment(homeFragment);
+                            return true;
 
-                    case R.id.bottom_action_notif:
-                        replaceFragment(notificationFragment);
-                        return true;
+                        case R.id.bottom_action_account:
+                            replaceFragment(accountFragment);
+                            return true;
+
+                        case R.id.bottom_action_notif:
+                            replaceFragment(notificationFragment);
+                            return true;
 
                         default:
                             return false;
+                    }
                 }
-            }
-        });
+            });
 
 
-        addPostBtn=findViewById(R.id.add_post_btn);
-        addPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newPostIntent=new Intent(MainActivity.this,NewPostActivity.class);
-                startActivity(newPostIntent);
-            }
-        });
+            addPostBtn = findViewById(R.id.add_post_btn);
+            addPostBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
+                    startActivity(newPostIntent);
+                }
+            });
+        }
     }
 
     @Override
