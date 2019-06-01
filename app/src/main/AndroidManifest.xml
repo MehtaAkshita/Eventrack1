@@ -16,9 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NewPostActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity android:name=".CommentsActivity"></activity>
+        <activity
+            android:name=".NewPostActivity"
+            android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".SetupActivity" />
         <activity
             android:name=".RegisterActivity"

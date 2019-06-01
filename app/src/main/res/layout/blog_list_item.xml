@@ -85,7 +85,9 @@
                 android:layout_marginTop="309dp"
                 android:layout_marginEnd="35dp"
                 android:layout_marginBottom="116dp"
+                android:elegantTextHeight="true"
                 android:text="Lorem ipsum abra ka dabra wosh hush i am about to post see your content here"
+                android:textColor="#050505"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -133,6 +135,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="88dp"
                 android:text="Venue"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +150,7 @@
                 android:layout_marginEnd="206dp"
                 android:layout_marginBottom="58dp"
                 android:text="Date"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +165,7 @@
                 android:layout_marginEnd="48dp"
                 android:layout_marginBottom="59dp"
                 android:text="Time"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -177,7 +182,7 @@
                 android:layout_marginEnd="331dp"
                 android:layout_marginBottom="88dp"
                 android:text="Venue :"
-                android:textColor="#2196F3"
+                android:textColor="#0165B4"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,12 +198,14 @@
                 android:layout_marginEnd="337dp"
                 android:layout_marginBottom="58dp"
                 android:text="Date : "
-                android:textColor="#2196F3"
+                android:textColor="#0165B4"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -209,11 +216,53 @@
                 android:layout_marginEnd="141dp"
                 android:layout_marginBottom="58dp"
                 android:text="Time : "
-                android:textColor="#2196F3"
+                android:textColor="#0165B4"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/blog_comment_btn"
+                android:layout_width="34dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="250dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="104dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/blog_event_time"
+                app:layout_constraintVertical_bias="0.166"
+                app:srcCompat="@mipmap/action_like_comment" />
+
+            <TextView
+                android:id="@+id/blog_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="428dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="19dp"
+                android:text="0 Comments"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/blog_comment_btn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/blog_delete_btn"
+                android:layout_width="111dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                android:enabled="false"
+                android:text="Delete Post"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
