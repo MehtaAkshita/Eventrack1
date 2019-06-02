@@ -40,9 +40,9 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
         String commentMessage = commentsList.get(position).getMessage();
         holder.setComment_message(commentMessage);
 
-        String userName = user_list.get(position).getName();
-        String userImage = user_list.get(position).getImage() ;
-        holder.setUserData(userName, userImage);
+//        String userName = user_list.get(position).getName();
+//        String userImage = user_list.get(position).getImage() ;
+//        holder.setUserData(userName, userImage);
 
     }
 
@@ -74,18 +74,18 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
             comment_message.setText(message);
         }
 
-        public void setUserData(String name,String image){
-
-            blogUserImage = mView.findViewById(R.id.blog_user_image);
-            blogUserName = mView.findViewById(R.id.blog_user_name);
-
-            blogUserName.setText(name);
-
-            RequestOptions placeholderOption = new RequestOptions();
-            placeholderOption.placeholder(R.drawable.new_post_default_profile_pic);
-            Glide.with(context).applyDefaultRequestOptions(placeholderOption).load(image).into(blogUserImage);
-
-        }
+//        public void setUserData(String name,String image){
+//
+//            blogUserImage = mView.findViewById(R.id.blog_user_image);
+//            blogUserName = mView.findViewById(R.id.blog_user_name);
+//
+//            blogUserName.setText(name);
+//
+//            RequestOptions placeholderOption = new RequestOptions();
+//            placeholderOption.placeholder(R.drawable.new_post_default_profile_pic);
+//            Glide.with(context).applyDefaultRequestOptions(placeholderOption).load(image).into(blogUserImage);
+//
+//        }
 
     }
 }

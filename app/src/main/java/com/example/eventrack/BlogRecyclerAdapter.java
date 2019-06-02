@@ -81,7 +81,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         holder.setTimeText(time_data);
 
         String image_url=blog_list.get(position).getImage_url();
-        String thumbUri = blog_list.get(position).getImage_thumb();
+        String thumbUri=blog_list.get(position).getImage_thumb();
         holder.setBlogImage(image_url, thumbUri);
 
         String blog_user_id=blog_list.get(position).getUser_id();

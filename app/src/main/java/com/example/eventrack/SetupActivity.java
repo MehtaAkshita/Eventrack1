@@ -3,6 +3,7 @@ package com.example.eventrack;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -34,8 +35,12 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,6 +62,7 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
+    private Bitmap compressedImageFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,24 +126,44 @@ public class SetupActivity extends AppCompatActivity {
                     setupProgress.setVisibility(View.VISIBLE);
                     if (isChanged) {
 
-                        user_id=firebaseAuth.getCurrentUser().getUid();
-                        final StorageReference image_path=storageReference.child("profile_images").child(user_id+".jpg");
+                        user_id = firebaseAuth.getCurrentUser().getUid();
 
-                        image_path.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        File newImageFile = new File(mainImageURI.getPath());
+                        try {
+
+                            compressedImageFile = new Compressor(SetupActivity.this)
+                                    .setMaxHeight(125)
+                                    .setMaxWidth(125)
+                                    .setQuality(50)
+                                    .compressToBitmap(newImageFile);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] thumbData = baos.toByteArray();
+
+                        UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
+
+                        image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    storeFirestore(task,user_name);
 
-                                }else{
-                                    String error=task.getException().getMessage();
-                                    Toast.makeText(SetupActivity.this,"(IMAGE Error): "+ error,Toast.LENGTH_LONG).show();
+                                if (task.isSuccessful()) {
+                                    storeFirestore(task, user_name);
+
+                                } else {
+
+                                    String error = task.getException().getMessage();
+                                    Toast.makeText(SetupActivity.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
+
                                     setupProgress.setVisibility(View.INVISIBLE);
 
                                 }
                             }
                         });
-
                     }else{
                         storeFirestore(null,user_name);
                     }
@@ -237,60 +263,36 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
-//    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-//        while (!urlTask.isSuccessful());
-//        Uri downloadUrl = urlTask.getResult();
-//    }
-
-    private void storeFirestore(Task<UploadTask.TaskSnapshot> task,String user_name) {
-        if(task!=null){
-//            Task<Uri> download_uri = task.getResult().getMetadata().getReference().getDownloadUrl();
-//            Task<Uri> urlTask = task.getResult().getMetadata().getReference().getDownloadUrl();
-//            Uri download_uri = urlTask.getResult();
-            String download_uri=task.getResult().getStorage().getDownloadUrl().toString();
-
-//            Task<Uri> download_uri = taskSnapshot.getStorage().getDownloadUrl();
-            Map<String,String> userMap=new HashMap<>();
-            userMap.put("name",user_name);
-            userMap.put("image",download_uri);
-            firebaseFirestore.collection("Users").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SetupActivity.this, "The user settings are updated", Toast.LENGTH_LONG).show();
-                        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    } else {
-                        String error = task.getException().getMessage();
-                        Toast.makeText(SetupActivity.this, "(FIRESTORE Error): " + error, Toast.LENGTH_LONG).show();
-                    }
-                    setupProgress.setVisibility(View.INVISIBLE);
-                }
-            });
-        }else{
-            Uri download_uri=mainImageURI;
-            Map<String,String> userMap=new HashMap<>();
-            userMap.put("name",user_name);
-            userMap.put("image",download_uri.toString());
-            firebaseFirestore.collection("Users").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SetupActivity.this, "The user settings are updated", Toast.LENGTH_LONG).show();
-                        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    } else {
-                        String error = task.getException().getMessage();
-                        Toast.makeText(SetupActivity.this, "(FIRESTORE Error): " + error, Toast.LENGTH_LONG).show();
-                    }
-                    setupProgress.setVisibility(View.INVISIBLE);
-                }
-
-            });
+    private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task, final String user_name) {
+        String download_uri;
+        if(task != null) {
+            download_uri = task.getResult().getStorage().getDownloadUrl().toString();
+        } else {
+            download_uri = mainImageURI.toString();
         }
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("name", user_name);
+        userMap.put("image", download_uri);
+
+        firebaseFirestore.collection("Users").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(task.isSuccessful()){
+
+                    Toast.makeText(SetupActivity.this, "The user Settings are updated.", Toast.LENGTH_LONG).show();
+                    Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+
+                } else {
+
+                    String error = task.getException().getMessage();
+                    Toast.makeText(SetupActivity.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+                }
+                setupProgress.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     private void BringImagePicker(){

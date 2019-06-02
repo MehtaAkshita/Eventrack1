@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp", Query.Direction.DESCENDING).limit(3);
+            Query firstQuery = firebaseFirestore.collection("Posts").orderBy("date", Query.Direction.DESCENDING).limit(3);
             firstQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                 });
-//                                blogRecyclerAdapter.notifyDataSetChanged();
                             }
                         }
                         isFirstPageFirstLoad=false;
@@ -127,7 +126,6 @@ public class HomeFragment extends Fragment {
             });
 
         }
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -136,7 +134,7 @@ public class HomeFragment extends Fragment {
         if(firebaseAuth.getCurrentUser() != null) {
             Query nextQuery;
             nextQuery = firebaseFirestore.collection("Posts")
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .orderBy("date", Query.Direction.DESCENDING)
                     .startAfter(lastVisible)
                     .limit(3);
 
