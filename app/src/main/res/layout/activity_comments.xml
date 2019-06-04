@@ -8,9 +8,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/comment_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="67dp"
-        android:layout_marginBottom="31dp"
+        android:layout_width="0sp"
+        android:layout_height="67sp"
+        android:layout_marginBottom="31sp"
         android:background="#FF9800"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintBottom_toTopOf="@+id/comment_plain_text"
@@ -21,11 +21,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/comment_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="101dp"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="101sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +33,10 @@
 
     <EditText
         android:id="@+id/comment_field"
-        android:layout_width="294dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="294sp"
+        android:layout_height="46sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
         android:ems="10"
         android:hint="Your Comment here"
         android:inputType="textPersonName"
@@ -48,8 +48,8 @@
 
     <ImageView
         android:id="@+id/comment_post_btn"
-        android:layout_width="39dp"
-        android:layout_height="35dp"
+        android:layout_width="39sp"
+        android:layout_height="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -60,10 +60,10 @@
 
     <TextView
         android:id="@+id/comment_plain_text"
-        android:layout_width="130dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="130sp"
+        android:layout_height="26sp"
+        android:layout_marginStart="16sp"
+        android:layout_marginBottom="16sp"
         android:text="Comments : "
         android:textColor="#E81F1919"
         android:textSize="18sp"

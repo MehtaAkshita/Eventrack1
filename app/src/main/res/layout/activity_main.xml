@@ -8,8 +8,8 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="66dp"
+        android:layout_width="0sp"
+        android:layout_height="64sp"
         android:background="#FF9800"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,10 +18,10 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_post_btn"
-        android:layout_width="55dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="55sp"
+        android:layout_height="51sp"
+        android:layout_marginEnd="16sp"
+        android:layout_marginBottom="8sp"
         android:backgroundTint="#F44336"
         android:clickable="true"
         android:focusable="true"
@@ -34,19 +34,19 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/mainBottomNav"
-        android:layout_width="409dp"
-        android:layout_height="65dp"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 
     <FrameLayout
         android:id="@+id/main_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="65dp"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        android:layout_marginBottom="65sp"
         android:textAlignment="center"
         android:touchscreenBlocksFocus="false"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParticipateActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/new_part_toolbar"
+        android:layout_width="411sp"
+        android:layout_height="64sp"
+        android:background="@android:color/holo_orange_dark"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/part_firstname"
+        android:layout_width="336sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="64sp"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part_image" />
+
+    <EditText
+        android:id="@+id/part_emp_id"
+        android:layout_width="336sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="16sp"
+        android:ems="10"
+        android:hint="Employee ID"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part_lastname" />
+
+    <EditText
+        android:id="@+id/part_department"
+        android:layout_width="336sp"
+        android:layout_height="53sp"
+        android:layout_marginTop="16sp"
+        android:ems="10"
+        android:hint="Department"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part_emp_id" />
+
+    <EditText
+        android:id="@+id/part_lastname"
+        android:layout_width="336sp"
+        android:layout_height="53sp"
+        android:layout_marginTop="16sp"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part_firstname" />
+
+    <Button
+        android:id="@+id/part_btn"
+        android:layout_width="222sp"
+        android:layout_height="53sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:text="Participate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/part_department" />
+
+    <ImageView
+        android:id="@+id/part_image"
+        android:layout_width="100sp"
+        android:layout_height="91sp"
+        android:layout_marginTop="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_part_toolbar"
+        app:srcCompat="@drawable/part" />
+
+</android.support.constraint.ConstraintLayout>

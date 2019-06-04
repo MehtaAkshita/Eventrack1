@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mainbottomNav;
 
     private HomeFragment homeFragment;
-    private NotificationFragment notificationFragment;
-    private AccountFragment accountFragment;
+//    private NotificationFragment notificationFragment;
+//    private AccountFragment accountFragment;
 
 
     @Override

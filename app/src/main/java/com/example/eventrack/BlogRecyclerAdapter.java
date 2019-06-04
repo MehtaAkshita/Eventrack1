@@ -226,6 +226,16 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             }
         });
 
+        holder.blogPartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent partIntent = new Intent(context, ParticipateActivity.class);
+                partIntent.putExtra("blog_post_id", blogPostId);
+                context.startActivity(partIntent);
+
+            }
+        });
+
     }
 
 
@@ -255,6 +265,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         private TextView blogCommentCount;
 
         private Button blogDeleteBtn;
+        private Button blogPartBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -263,6 +274,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             blogLikeBtn = mView.findViewById(R.id.blog_like_btn);
             blogCommentBtn = mView.findViewById(R.id.blog_comment_btn);
             blogDeleteBtn = mView.findViewById(R.id.blog_delete_btn);
+            blogPartBtn=mView.findViewById(R.id.blog_part_btn);
         }
 
         public void setDescText(String descText){

@@ -4,21 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:padding="5dp"
-    android:paddingStart="5dp"
-    android:paddingLeft="5dp"
-    android:paddingTop="5dp"
-    android:paddingEnd="5dp"
-    android:paddingRight="5dp"
-    android:paddingBottom="5dp"
     tools:context=".NewPostActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/new_post_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="9dp"
+        android:layout_width="0sp"
+        android:layout_height="66sp"
+        android:layout_marginBottom="9sp"
         android:background="@android:color/holo_orange_dark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintBottom_toTopOf="@+id/new_post_progress"
@@ -29,9 +21,9 @@
 
     <ImageView
         android:id="@+id/new_post_image"
-        android:layout_width="390dp"
-        android:layout_height="250dp"
-        android:layout_marginBottom="29dp"
+        android:layout_width="390sp"
+        android:layout_height="250sp"
+        android:layout_marginBottom="29sp"
         android:contentDescription="@string/new_post_image"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/new_post_desc"
@@ -43,9 +35,9 @@
 
     <EditText
         android:id="@+id/new_post_desc"
-        android:layout_width="360dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="22dp"
+        android:layout_width="360sp"
+        android:layout_height="56sp"
+        android:layout_marginBottom="22sp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/post_desc_hint"
@@ -60,9 +52,9 @@
     <Button
         android:id="@+id/post_btn"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="182dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="182sp"
+        android:layout_height="56sp"
+        android:layout_marginBottom="44sp"
         android:backgroundTint="#F44336"
         android:text="@string/new_post_btn_hint"
         android:textColor="#FAFAFA"
@@ -75,20 +67,20 @@
     <ProgressBar
         android:id="@+id/new_post_progress"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginBottom="15dp"
+        android:layout_width="0sp"
+        android:layout_height="8sp"
+        android:layout_marginBottom="15sp"
         app:layout_constraintBottom_toTopOf="@+id/new_post_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_post_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/new_part_toolbar" />
 
     <EditText
         android:id="@+id/new_post_venue"
-        android:layout_width="362dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="19dp"
+        android:layout_width="362sp"
+        android:layout_height="56sp"
+        android:layout_marginBottom="19sp"
         android:ems="10"
         android:hint="@string/new_post_venue"
         android:inputType="textPersonName"
@@ -100,8 +92,8 @@
 
     <EditText
         android:id="@+id/new_post_date"
-        android:layout_width="185dp"
-        android:layout_height="56dp"
+        android:layout_width="185sp"
+        android:layout_height="56sp"
         android:ems="10"
         android:hint="DD/MM/YYYY"
         android:inputType="date"
@@ -113,9 +105,9 @@
 
     <EditText
         android:id="@+id/new_post_time"
-        android:layout_width="158dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="133dp"
+        android:layout_width="158sp"
+        android:layout_height="56sp"
+        android:layout_marginBottom="133sp"
         android:ems="10"
         android:hint="@string/new_post_time"
         android:inputType="time"
