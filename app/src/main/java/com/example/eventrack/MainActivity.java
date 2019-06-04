@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
             //FRAGMENTS
             homeFragment = new HomeFragment();
-            notificationFragment = new NotificationFragment();
-            accountFragment = new AccountFragment();
+//            notificationFragment = new NotificationFragment();
+//            accountFragment = new AccountFragment();
 
             replaceFragment(homeFragment);
 
@@ -73,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
                             replaceFragment(homeFragment);
                             return true;
 
-                        case R.id.bottom_action_account:
-                            replaceFragment(accountFragment);
-                            return true;
-
-                        case R.id.bottom_action_notif:
-                            replaceFragment(notificationFragment);
-                            return true;
+//                        case R.id.bottom_action_account:
+//                            replaceFragment(accountFragment);
+//                            return true;
+//
+//                        case R.id.bottom_action_notif:
+//                            replaceFragment(notificationFragment);
+//                            return true;
 
                         default:
                             return false;

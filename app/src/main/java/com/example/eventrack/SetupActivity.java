@@ -69,10 +69,6 @@ public class SetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        Toolbar setupToolbar=findViewById(R.id.setupToolbar);
-        setSupportActionBar(setupToolbar);
-        getSupportActionBar().setTitle("Account Setup");
-
         firebaseAuth=FirebaseAuth.getInstance();
         user_id=firebaseAuth.getCurrentUser().getUid();
 
@@ -86,6 +82,11 @@ public class SetupActivity extends AppCompatActivity {
 
         setupProgress.setVisibility(View.VISIBLE);
         setupBtn.setEnabled(false);
+
+        Toolbar setupToolbar=findViewById(R.id.setupToolbar);
+        setSupportActionBar(setupToolbar);
+        getSupportActionBar().setTitle("Account Setup");
+
 
         firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -102,10 +103,6 @@ public class SetupActivity extends AppCompatActivity {
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.default_profile);
                         Glide.with(SetupActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(setupImage);
-
-                    }
-                    else{
-                        Toast.makeText(SetupActivity.this, "Data doesn't exist", Toast.LENGTH_LONG).show();
 
                     }
                 }else{
@@ -167,6 +164,8 @@ public class SetupActivity extends AppCompatActivity {
                     }else{
                         storeFirestore(null,user_name);
                     }
+                }else{
+                    Toast.makeText(SetupActivity.this, "Please Select your profile image by tapping the icon and enter your name to proceed ", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -266,7 +265,8 @@ public class SetupActivity extends AppCompatActivity {
     private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task, final String user_name) {
         String download_uri;
         if(task != null) {
-            download_uri = task.getResult().getStorage().getDownloadUrl().toString();
+//            download_uri = task.getResult().getStorage().getDownloadUrl().toString();
+            download_uri= storageReference.getDownloadUrl().toString();
         } else {
             download_uri = mainImageURI.toString();
         }
