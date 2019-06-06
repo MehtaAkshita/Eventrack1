@@ -37,4 +37,11 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
 }
 
+buildscript {
+    dependencies {
+        classpath 'com.android.tools.build:gradle'
+        classpath 'com.android.tools.build:gradle:3.4.1'
+    }
+}
+
 apply plugin: 'com.google.gms.google-services'
