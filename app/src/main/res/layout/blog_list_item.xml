@@ -256,14 +256,20 @@
                 android:id="@+id/blog_delete_btn"
                 android:layout_width="111sp"
                 android:layout_height="33sp"
-                android:layout_marginTop="20sp"
+                android:layout_marginStart="8sp"
+                android:layout_marginTop="24sp"
                 android:layout_marginEnd="12sp"
+                android:layout_marginBottom="8sp"
                 android:enabled="false"
                 android:text="Delete Post"
                 android:textSize="11sp"
                 android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/blog_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_bias="0.843"
+                app:layout_constraintStart_toEndOf="@+id/blog_user_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/blog_part_btn"

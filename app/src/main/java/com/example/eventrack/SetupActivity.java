@@ -142,7 +142,16 @@ public class SetupActivity extends AppCompatActivity {
                         compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] thumbData = baos.toByteArray();
 
-                        UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
+                        final UploadTask image_path = storageReference.child("profile_images").child(user_id + ".jpg").putBytes(thumbData);
+
+//                        image_path.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+//                                while (!urlTask.isSuccessful()) ;
+//                                final String downloadthumbUri = urlTask.getResult().toString();
+//                            }
+//                        });
 
                         image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -150,14 +159,12 @@ public class SetupActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     storeFirestore(task, user_name);
-
                                 } else {
 
                                     String error = task.getException().getMessage();
                                     Toast.makeText(SetupActivity.this, "(IMAGE Error) : " + error, Toast.LENGTH_LONG).show();
 
                                     setupProgress.setVisibility(View.INVISIBLE);
-
                                 }
                             }
                         });
@@ -170,9 +177,6 @@ public class SetupActivity extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
 
@@ -265,8 +269,8 @@ public class SetupActivity extends AppCompatActivity {
     private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task, final String user_name) {
         String download_uri;
         if(task != null) {
-//            download_uri = task.getResult().getStorage().getDownloadUrl().toString();
-            download_uri= storageReference.getDownloadUrl().toString();
+            Task<Uri> downloadTask= task.getResult().getStorage().getDownloadUrl();
+            download_uri = downloadTask.getResult().toString();
         } else {
             download_uri = mainImageURI.toString();
         }
